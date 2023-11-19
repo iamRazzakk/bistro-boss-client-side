@@ -1,29 +1,33 @@
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../component/AuthProvider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 const Login = () => {
     const { logIn } = useContext(AuthContext)
-    const captuRef = useRef(null)
     const [disable, setDisable] = useState(true)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location.state?.form?.pathname || '/'
+    console.log(from);
     const handleLogin = e => {
         e.preventDefault()
         const form = e.target
         const email = form.email.value
         const password = form.password.value
-        const capture = form.capture.value
+        // const capture = form.capture.value
         // console.log(email, password, capture);
         logIn(email, password)
             .then(result => {
                 const user = result?.userCredential?.user;
                 console.log(user);
                 toast.success('Login successfully')
+                navigate(from, { replace: true })
             })
             .catch(error => {
-                console.log(error);
+                console.error('Login error:', error.message);
             })
     }
     useEffect(() => {

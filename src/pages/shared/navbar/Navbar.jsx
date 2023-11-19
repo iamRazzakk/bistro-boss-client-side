@@ -13,13 +13,14 @@ const Navbar = () => {
             })
     }
     const navOption = <>
-        <li><Link to={'/'}>Home</Link></li>
-        <li><Link to={'/menu'}>Our Menu</Link></li>
-        <li><Link to={'/order/salad'}>Order Food</Link></li>
+        <li className="text-white"><Link to={'/'}>Home</Link></li>
+        <li className="text-white"><Link to={'/menu'}>Our Menu</Link></li>
+        <li className="text-white"><Link to={'/order/salad'}>Order Food</Link></li>
+        <li className="text-white"><Link to={'/secret'}>Secret</Link></li>
         {user ? (
-            <button onClick={handleLogout}><Link to={'/signUp'}>Log out</Link></button>
+            <button className="text-white" onClick={handleLogout}><Link to={'/signUp'}>Log out</Link></button>
         ) : (
-            <button><Link to={'/login'}>Login</Link></button>
+            <button className="text-white"><Link to={'/login'}>Login</Link></button>
         )}
     </>
 
