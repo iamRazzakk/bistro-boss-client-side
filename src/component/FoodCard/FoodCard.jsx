@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UseAuth from "../../hooks/useAuth/UseAuth";
 import Swal from 'sweetalert2'
 import useAxiox from "../../hooks/useAxiox/useAxiox";
+import useCart from "../../hooks/useCart/useCart";
 
 
 
@@ -11,6 +12,7 @@ const FoodCard = ({ item }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const axiosSeciout = useAxiox()
+    const [, refetch] = useCart()
     const handleAddToCart = food => {
         // console.log(food, user.email);
         if (user && user.email) {
@@ -30,7 +32,8 @@ const FoodCard = ({ item }) => {
                         Swal.fire("Data insert in DB");
                     }
                 })
-
+            // using refetch
+            refetch()
         } else {
             Swal.fire({
                 title: "Please login for add to cart",
