@@ -10,8 +10,8 @@ const Login = () => {
     const [disable, setDisable] = useState(true)
     const location = useLocation()
     const navigate = useNavigate()
-    const from = location.state?.form?.pathname || '/'
-    console.log(from);
+    const from = location.state?.form?.pathname || "/"
+    console.log("state in path name", location.state);
     const handleLogin = e => {
         e.preventDefault()
         const form = e.target

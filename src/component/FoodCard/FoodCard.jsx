@@ -1,19 +1,35 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import UseAuth from "../../hooks/useAuth/UseAuth";
 import Swal from 'sweetalert2'
+import useAxiox from "../../hooks/useAxiox/useAxiox";
 
 
 
 const FoodCard = ({ item }) => {
-    const { name, image, recipe, price } = item;
+    const { name, image, recipe, price, _id } = item;
     const { user } = UseAuth()
-    const location = useLocation()
     const navigate = useNavigate()
+    const location = useLocation()
+    const axiosSeciout = useAxiox()
     const handleAddToCart = food => {
         // console.log(food, user.email);
         if (user && user.email) {
             // todo: send cart item to the database
             console.log(user.email);
+            const cartItem = {
+                menuId: _id,
+                email: user.email,
+                name,
+                price,
+                image
+            }
+            axiosSeciout.post('/carts', cartItem)
+                .then(res => {
+                    console.log(res.data);
+                    if (res.data.acknowledged) {
+                        Swal.fire("Data insert in DB");
+                    }
+                })
 
         } else {
             Swal.fire({
