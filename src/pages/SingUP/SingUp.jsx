@@ -1,22 +1,34 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../component/AuthProvider/AuthProvider";
 
 const SingUp = () => {
+    const navigate = useNavigate()
     const {
         register,
+        reset,
         handleSubmit,
         formState: { errors },
     } = useForm()
-    const { createUser } = useContext(AuthContext)
+    const { createUser, updateProfileUser } = useContext(AuthContext)
     const onSubmit = (data) => {
         console.log(data);
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
+                updateProfileUser(data.name, data.PhotoURL)
+                    .then(() => {
+                        console.log("User profile updated");
+                        reset()
+                        toast.success("User create successfully")
+                        navigate('/')
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
             })
             .then(error => {
                 console.log(error);
@@ -32,12 +44,22 @@ const SingUp = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <h1 className="text-center text-3xl font-bold">Sing Up Now</h1>
                         <div>
+                            {/* for user name */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Your Name</span>
                                 </label>
                                 <input type="text" {...register('name', { required: true })} placeholder="Enter name" className="input input-bordered" />
                                 {errors.name && <span className="text-red-600">Name is required</span>}
+
+                            </div>
+                            {/* for user Img */}
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">PhotoURL</span>
+                                </label>
+                                <input type="text" {...register('PhotoURL', { required: true })} placeholder="Enter photo" className="input input-bordered" />
+                                {errors.name && <span className="text-red-600">PhotoURL is required</span>}
 
                             </div>
                             <div className="form-control">
