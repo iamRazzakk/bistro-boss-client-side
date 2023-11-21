@@ -5,8 +5,9 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { AuthContext } from '../../component/AuthProvider/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { FaGoogle } from 'react-icons/fa';
 const Login = () => {
-    const { logIn } = useContext(AuthContext)
+    const { logIn, googleSingIn } = useContext(AuthContext)
     const [disable, setDisable] = useState(true)
     const location = useLocation()
     const navigate = useNavigate()
@@ -28,6 +29,17 @@ const Login = () => {
             })
             .catch(error => {
                 console.error('Login error:', error.message);
+            })
+    }
+    const handleLoginWithGooglePopup = () => {
+        googleSingIn()
+            .then(result => {
+                // const users = result.user
+                // console.log(users);
+                console.log(result.user);
+            })
+            .catch(error => {
+                console.log(error);
             })
     }
     useEffect(() => {
@@ -81,6 +93,12 @@ const Login = () => {
                             <Toaster></Toaster>
                         </form>
                         <p className='text-center'><small>New hear?<Link className='font-bold text-blue-600' to={'/singUp'}> Create a Account</Link></small></p>
+                        <hr />
+                        <div className='text-center'>
+                            <button onClick={handleLoginWithGooglePopup} className="btn btn-circle btn-outline">
+                                <FaGoogle></FaGoogle>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
