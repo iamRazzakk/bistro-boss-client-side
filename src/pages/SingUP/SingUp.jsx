@@ -22,7 +22,8 @@ const SingUp = () => {
                         // create user entry in the database
                         const userInfo = {
                             name: data.name,
-                            photoURL: data.photoURL,
+                            email: data.email,
+                            // photoURL: data.photoURL,
                         }
                         axiosPublic.post('/users', userInfo)
                             .then(res => {
@@ -48,7 +49,18 @@ const SingUp = () => {
     };
     const handleLoginWithGooglePopup = () => {
         googleSingIn()
-            .then()
+            .then(result => {
+                console.log(result.user);
+                const userInfo = {
+                    email: result.user?.email,
+                    name: result.user?.displayName
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        console.log(res.data);
+                        navigate('/')
+                    })
+            })
     }
 
     return (

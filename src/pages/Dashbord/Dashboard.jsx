@@ -6,6 +6,7 @@ import useCart from "../../hooks/useCart/useCart";
 
 const Dashboard = () => {
     const [cart] = useCart()
+    const isAdmin = true
     return (
         <div className="flex">
             {/* dashboard side bar */}
