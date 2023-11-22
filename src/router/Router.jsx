@@ -9,6 +9,7 @@ import Secret from "./secret/Secret";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes";
 import Dashboard from "../pages/Dashbord/Dashboard";
 import Cart from "../pages/Dashbord/Cart/Cart";
+import Allusers from "../pages/Dashbord/Allusers/Allusers";
 
 export const router = createBrowserRouter([
     {
@@ -48,6 +49,11 @@ export const router = createBrowserRouter([
             {
                 path: 'cart',
                 element: <Cart></Cart>
+            },
+            // admin routs
+            {
+                path: 'allusers',
+                element: <Allusers></Allusers>
             }
         ]
     },
