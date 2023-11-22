@@ -10,16 +10,14 @@ import { FaGoogle } from "react-icons/fa";
 const SingUp = () => {
     const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { createUser, updateUserProfile, googleSingIn } = useContext(AuthContext);
+    const { createUser, updateProfileUser, googleSingIn } = useContext(AuthContext);
     const navigate = useNavigate();
-
     const onSubmit = data => {
-
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
-                updateUserProfile(data.name, data.photoURL)
+                updateProfileUser(data.name, data.photoURL)
                     .then(() => {
                         // create user entry in the database
                         const userInfo = {
@@ -50,7 +48,7 @@ const SingUp = () => {
     };
     const handleLoginWithGooglePopup = () => {
         googleSingIn()
-        .then()
+            .then()
     }
 
     return (
